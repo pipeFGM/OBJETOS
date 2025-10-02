@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modelos Voxel en AR</title>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .model-container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 30px;
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+        model-viewer {
+            width: 100%;
+            height: 300px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            --poster-color: #cccccc; /* Color del póster mientras carga */
+        }
+        h1, h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .qr-code-container {
+            margin-top: 30px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+        }
+        .qr-code-image {
+            width: 200px;
+            height: 200px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-top: 15px;
+        }
+        .instruction-list {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+            margin-top: 20px;
+        }
+        .instruction-list li {
+            margin-bottom: 10px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <h1>Mis Diseños Voxel en Realidad Aumentada</h1>
+
+    <p>Escanea el código QR de abajo para ver todos los modelos en AR en tu dispositivo móvil. También puedes interactuar con ellos aquí.</p>
+
+    <div class="model-container">
+        <h2>007 Voxel</h2>
+        <model-viewer src="007.glb"
+                      alt="Ordenador Voxel"
+                      ar
+                      ar-modes="webxr scene-viewer quick-look"
+                      shadow-intensity="1"
+                      camera-controls
+                      auto-rotate>
+        </model-viewer>
+        <p>007 estilo clásico</p>
+    </div>
+
+    <div class="model-container">
+        <h2>Garage Voxel</h2>
+        <model-viewer src="garage.glb"
+                      alt="Tren Voxel"
+                      ar
+                      ar-modes="webxr scene-viewer quick-look"
+                      shadow-intensity="1"
+                      camera-controls
+                      auto-rotate>
+        </model-viewer>
+        <p>Garage hecho de en un 70% de vidrio.</p>
+    </div>
+
+    <div class="model-container">
+        <h2>Ferrai Voxel</h2>
+        <model-viewer src="ferrari.glb"
+                      alt="Robot Voxel"
+                      ar
+                      ar-modes="webxr scene-viewer quick-look"
+                      shadow-intensity="1"
+                      camera-controls
+                      auto-rotate>
+        </model-viewer>
+        <p>Ferrari 288 GTO.</p>
+    </div>
+
+    <img class="qr-code-container">
+        <h2>Código QR para AR</h2>
+        <p>Escanea este código con la cámara de tu teléfono para abrir esta página y ver los modelos en Realidad Aumentada.</p>
+        <img id="qrCodeImage" class="qr-code-image" src="" alt="Código QR para AR">
+        <img class="instruction-list">
+            <h3>Instrucciones para ver en AR:</h3>
+            <ul>
+                <li>1. Asegúrate de que tu teléfono sea compatible con AR (la mayoría de los smartphones modernos lo son).</li>
+                <li>2. Abre la aplicación de la cámara de tu teléfono y apunta al código QR.</li>
+                <li>3. Toca la notificación que aparece para abrir la página.</li>
+                <li>4. Una vez en la página, toca el icono "AR" que aparecerá sobre cada modelo para activarlo en tu entorno.</li>
+                <li>5. Para dispositivos iOS, la opción "Quick Look" te permitirá ver el modelo directamente en ARKit.</li>
+                <li>6. Para dispositivos Android, la opción "Scene Viewer" te guiará a través de Google Play Services for AR.</li>
+            </ul>
+        </div>
+    </div>
+
+    
+<script>
+    function generateQRCode() {
+        // 1. Obtén la URL que se va a codificar (esto debe funcionar si la página ya está en GitHub Pages)
+        var currentUrl = window.location.href; 
+        
+        // 2. Encuentra el contenedor donde quieres que se dibuje el QR
+        var qrCodeContainer = document.getElementById("qrCodeDiv");
+
+        // Si el contenedor existe, procede
+        if (qrCodeContainer) {
+            // Limpia el contenido anterior por si acaso
+            qrCodeContainer.innerHTML = '';
+            
+            // 3. Genera el código QR dentro del div
+            var qrcode = new QRCode(qrCodeContainer, {
+                text: currentUrl,
+                width: 200,
+                height: 200,
+                colorDark : "#000000",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+            
+            // Opcional: Mostrar la URL debajo del QR para depuración
+            // console.log("QR generado para la URL:", currentUrl);
+        } else {
+            // console.error("No se encontró el contenedor 'qrCodeDiv' en el HTML.");
+        }
+    }
+
+    // Llama a la función para generar el QR cuando la página se carga completamente
+    window.onload = generateQRCode;
+</script>
+</body>
+</html>
